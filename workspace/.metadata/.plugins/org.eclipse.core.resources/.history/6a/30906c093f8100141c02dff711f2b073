@@ -1,0 +1,2 @@
+cmdhistory=["(create-maze 2 2)" "(create-maze 5 5)" "([1 1] (create-maze 5 5))" "((create-maze 5 5) [1 1])" "(create-maze 5 5)" "(\:1-1 (create-maze 5 5))" "(create-maze 5 5)" "(\:1-1 (create-maze 5 5))"]
+eclipse.preferences.version=1

@@ -1,0 +1,7 @@
+redo maze generation as an AI search algorithm using a successor function and a goal function
+
+start point - a 2D array of disconnected rooms
+
+successor function - takes an incomplete maze and returns the list of all mazes created by adding one more room connection
+
+goal function - takes a maze and returns if it's complete

@@ -1,0 +1,124 @@
+
+
+public class Maze {
+
+	private int mazeX, mazeY; //dimensions of the maze
+	private int[] startLocation, endLocation; //the location of the start and end rooms
+	private Room start, end; //the start and end rooms
+	private Room[][] maze; //the maze as an array of rooms
+
+
+	public Maze() //default size is 5x5
+	{
+		this(5,5);
+	}
+
+	public Maze(int x, int y)
+	{
+		mazeX = x;
+		mazeY = y;
+		maze = new Room[mazeX][mazeY];
+		
+		//initialize the maze as a 2D array of unconnected rooms
+		for (int i = 0; i < maze.length; i++)
+		{
+			for (int j = 0; j < maze[i].length; j++)
+			{
+				maze[i][j] = new Room();
+			}
+		}
+
+		//choose a starting location and an ending location
+		startLocation = new int[]{0, (int)(Math.random()*(mazeY))};  
+		endLocation = new int[]{mazeX-1, (int)(Math.random()*(mazeY))};
+
+		start = maze[startLocation[0]][startLocation[1]]; //start is the chosen starting room
+		end = maze[endLocation[0]][endLocation[1]]; //start is the chosen starting room
+	}
+	
+	public Room getRoom (int x, int y)
+	{
+		return maze[x][y];
+	}
+	
+	public Room getRoom (int[] location)
+	{
+		return getRoom (location[0], location[1]);
+	}
+	
+	public void connectRooms(int[] loc1, int[] loc2)
+	{
+		Room r1 = getRoom(loc1);
+		Room r2 = getRoom(loc2);
+		//direction can be 0,1,2,3 depending on whether direction is N,E,S,W
+		//y2-y1 = -1 or 1 has 1 added to it to convert to N = 0 and S = 2
+		//x2-x1 has 2 added to convert to E = 1 and W = 3
+		int direction = ((loc2[0] - loc1[0]) + 2) + ((loc2[1] - loc1[1]) + 1); //direction is direction of r2 from r1
+		
+		r1.connectRooms(r2, direction);
+		r2.connectRooms(r1, (direction+2)%4);
+	}
+
+//	private boolean deadEnd (int[] roomLocation)
+//	{
+//
+//		//calculate the locations of the four neighboring rooms
+//		int[][] neighborLocations = new int[][] {
+//				{roomLocation[0],roomLocation[1]-1},
+//				{roomLocation[0]+1,roomLocation[1]},
+//				{roomLocation[0],roomLocation[1]+1},
+//				{roomLocation[0]-1,roomLocation[1]}
+//		};
+//
+//		//remove locations that are invalid (outside the maze or already connected to)
+//		//North
+//		if (roomLocation[1] == 0 || maze[neighborLocations[0][0]][neighborLocations[0][1]].getNumConnectedRooms() > 0)
+//			neighborLocations[0] = null;
+//		//South
+//		if (roomLocation[1] == mazeY-1 || maze[neighborLocations[2][0]][neighborLocations[2][1]].getNumConnectedRooms() > 0)
+//			neighborLocations[2] = null;
+//		//West
+//		if (roomLocation[0] == 0 || maze[neighborLocations[3][0]][neighborLocations[3][1]].getNumConnectedRooms() > 0)
+//			neighborLocations[3] = null;
+//		//East
+//		if (roomLocation[0] == mazeX-1 || maze[neighborLocations[1][0]][neighborLocations[1][1]].getNumConnectedRooms() > 0)
+//			neighborLocations[1] = null;
+//		
+//		for (int[] neighbor : neighborLocations)
+//		{
+//			if (neighbor != null)
+//				return false;
+//		}
+//		return true;
+//	}
+
+	public String toString()
+	{
+		String mazeString = "";
+
+		for (int i = 0; i < mazeY; i++)
+		{
+			for (int k = 0; k < 3; k++)
+			{
+				for (int j = 0; j < mazeX; j++)
+				{
+					if (maze[j][i] == end)
+						mazeString += maze[j][i].toStringArray(1)[k];
+					else if (maze[j][i] == start)
+						mazeString += maze[j][i].toStringArray(0)[k];
+					else
+						mazeString += maze[j][i].toStringArray()[k];
+				}
+				mazeString += "\n";
+			}
+		}
+
+		return mazeString;
+	}
+
+	public static void main(String[] args) {
+			Maze maze = new Maze(10,10);
+			System.out.println(maze);
+	}
+
+}

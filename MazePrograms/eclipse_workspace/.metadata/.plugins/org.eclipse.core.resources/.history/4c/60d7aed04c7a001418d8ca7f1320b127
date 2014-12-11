@@ -1,0 +1,71 @@
+public class Maze {
+
+	int mazeX, mazeY;
+	int[] startLocation;
+	Room start;
+	Room[][] maze;
+
+	public Maze()
+	{
+		this(5,5);
+	}
+
+	public Maze(int x, int y)
+	{
+		mazeX = x;
+		mazeY = y;
+		Room[][] maze = new Room[mazeX][mazeY];
+
+		for (int i = 0; i < maze.length; i++)
+		{
+			for (int j = 0; j < maze[i].length; j++)
+			{
+				maze[i][j] = new Room();
+			}
+		}
+
+		startLocation = new int[]{(int)(Math.random()*(mazeX-1)), (int)(Math.random()*(mazeY-1))};
+
+		Room start = maze[startLocation[0]][startLocation[1]]; //start is the chosen starting room
+		
+		generateMaze(start, startLocation);
+	}
+	
+	private void generateMaze(Room r, int[] rLocation)
+	{
+		int[][] neighborLocations = new int[4][2]; //4 neighbors each with an x and y coordinate
+		
+		if (rLocation[1] == 0)
+			
+		
+		
+		switch((int)(Math.random()*(start.getMaxConnectedRooms()-1))) //FIX ARRAYINDEXOUTOFBOUNDS
+		{
+		case 0:
+			start.connectRooms(maze[startX][startY-1]);
+			maze[startX][startY-1].connectRooms(start);
+			break;
+		case 1:
+			start.connectRooms(maze[startX+1][startY]);
+			maze[startX+1][startY].connectRooms(start);
+			break;
+		case 2:
+			start.connectRooms(maze[startX][startY+1]);
+			maze[startX][startY+1].connectRooms(start);
+			break;
+		case 3:
+			start.connectRooms(maze[startX-1][startY]);
+			maze[startX-1][startY].connectRooms(start);
+			break;
+		default:
+			System.out.println("Error: invalid neighbor code");
+		}
+		
+	}
+
+	public static void main(String[] args) {
+		
+		Maze maze = new Maze();
+	}
+
+}

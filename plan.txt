@@ -1,0 +1,25 @@
+Choose random start
+Choose random end
+
+int validConnections (Room thisRoom)
+{
+	numberOfConnectionsThatCanBeMade = 0;
+
+	for (Room n : neighbors)
+		if (n != null &&
+			n.numConnections() == 0)
+		{
+			numberOfConnectionsThatCanBeMade++;
+		}
+	return numberOfConnectionsThatCanBeMade;
+}
+
+
+
+create stack of visited words
+when a new dead end is found or the end of the maze is connected to pop a random number of elements and continue from there
+getting to the same dead end twice is impossible so long as routes only connect to places that have no connections yet
+
+if jumping back goes to the start and there are no options go through the maze until you find one?
+
+pick a random neighbor and try from there?
